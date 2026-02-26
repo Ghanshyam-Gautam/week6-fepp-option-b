@@ -1,9 +1,7 @@
 import BookListing from "./BookListing";
 
 const BookListings = ({ books }) => {
-  if (books.length === 0) {
-    return <p>No books found.</p>;
-  }
+  if (books.length === 0) return <p>No books found.</p>;
 
   return (
     <div className="book-list">

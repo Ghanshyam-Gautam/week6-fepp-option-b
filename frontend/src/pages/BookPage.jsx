@@ -1,5 +1,5 @@
-import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
+import { useParams, useNavigate } from "react-router-dom";
 
 const BookPage = () => {
   const { id } = useParams();
@@ -12,9 +12,8 @@ const BookPage = () => {
   useEffect(() => {
     const fetchBook = async () => {
       try {
-        const res = await fetch(`http://localhost:3000/api/books/${id}`);
-        if (!res.ok) throw new Error("Failed to fetch book");
-
+        const res = await fetch(`/api/books/${id}`);
+        if (!res.ok) throw new Error("Failed to fetch");
         const data = await res.json();
         setBook(data);
       } catch (err) {
@@ -23,35 +22,24 @@ const BookPage = () => {
         setLoading(false);
       }
     };
-
     fetchBook();
   }, [id]);
 
-  if (loading) return <p>Loading book details...</p>;
+  if (loading) return <p>Loading...</p>;
   if (error) return <p>Error: {error}</p>;
-  if (!book) return <p>No book found.</p>;
+  if (!book) return <p>No book found</p>;
 
   return (
-    <div className="book-preview">
-      <button onClick={() => navigate("/")}>Back</button>
-
+    <div className="book-detail">
       <h2>{book.title}</h2>
-
-      <p>Author: {book.author}</p>
-      <p>ISBN: {book.isbn}</p>
-      <p>Publisher: {book.publisher}</p>
-      <p>Genre: {book.genre}</p>
-
-      <p>Available: {book.availability?.isAvailable ? "Yes" : "No"}</p>
-
-      <p>
-        Due Date:{" "}
-        {book.availability?.dueDate
-          ? new Date(book.availability.dueDate).toLocaleDateString()
-          : "N/A"}
-      </p>
-
-      <p>Borrower: {book.availability?.borrower || "N/A"}</p>
+      <p><strong>Author:</strong> {book.author}</p>
+      <p><strong>ISBN:</strong> {book.isbn}</p>
+      <p><strong>Publisher:</strong> {book.publisher}</p>
+      <p><strong>Genre:</strong> {book.genre}</p>
+      <p><strong>Available:</strong> {book.availability?.isAvailable ? "Yes" : "No"}</p>
+      <p><strong>Due Date:</strong> {book.availability?.dueDate || "N/A"}</p>
+      <p><strong>Borrower:</strong> {book.availability?.borrower || "N/A"}</p>
+      <button onClick={() => navigate(-1)}>Back</button>
     </div>
   );
 };
