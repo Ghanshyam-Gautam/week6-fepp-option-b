@@ -4,6 +4,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import Home from "./pages/HomePage";
 import AddBookPage from "./pages/AddBookPage";
 import BookPage from "./pages/BookPage";
+import EditBookPage from "./pages/EditBookPage"; 
 import Navbar from "./components/Navbar";
 import NotFoundPage from "./pages/NotFoundPage";
 
@@ -20,8 +21,11 @@ const App = () => {
             {/* Add book page */}
             <Route path="/add-book" element={<AddBookPage />} />
 
-            {/* FIXED: View a single book */}
+            {/* View a single book */}
             <Route path="/books/:id" element={<BookPage />} />
+
+            {/* Edit book page */}
+            <Route path="/edit-book/:id" element={<EditBookPage />} /> 
 
             {/* Catch-all Not Found */}
             <Route path="*" element={<NotFoundPage />} />

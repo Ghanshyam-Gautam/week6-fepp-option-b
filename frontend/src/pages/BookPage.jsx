@@ -8,7 +8,6 @@ const BookPage = () => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(null);
 
-  // Fetch book details
   useEffect(() => {
     const fetchBook = async () => {
       try {
@@ -25,10 +24,9 @@ const BookPage = () => {
     fetchBook();
   }, [id]);
 
-  // Delete book handler
   const handleDelete = async () => {
-    const confirm = window.confirm("Are you sure you want to delete this book?");
-    if (!confirm) return;
+    const confirmDelete = window.confirm("Are you sure you want to delete this book?");
+    if (!confirmDelete) return;
 
     try {
       const res = await fetch(`/api/books/${id}`, {
@@ -36,7 +34,6 @@ const BookPage = () => {
       });
 
       if (res.status === 204) {
-        // Deleted successfully, go back to Home
         navigate("/");
       } else {
         const data = await res.json();
@@ -62,8 +59,20 @@ const BookPage = () => {
       <p><strong>Due Date:</strong> {book.availability?.dueDate || "N/A"}</p>
       <p><strong>Borrower:</strong> {book.availability?.borrower || "N/A"}</p>
 
-      <button onClick={() => navigate(-1)}>Back</button>
-      <button onClick={handleDelete} style={{ marginLeft: "10px", color: "white", backgroundColor: "red" }}>
+      <button onClick={() => navigate("/")}>Back</button>
+
+      
+      <button
+        onClick={() => navigate(`/edit-book/${id}`)}
+        style={{ marginLeft: "10px" }}
+      >
+        Edit
+      </button>
+
+      <button
+        onClick={handleDelete}
+        style={{ marginLeft: "10px", color: "white", backgroundColor: "red" }}
+      >
         Delete
       </button>
     </div>
