@@ -1,9 +1,15 @@
 import BookListing from "./BookListing";
 
-const BookListings = () => {
+const BookListings = ({ books }) => {
+  if (books.length === 0) {
+    return <p>No books found.</p>;
+  }
+
   return (
     <div className="book-list">
-      <BookListing />
+      {books.map((book) => (
+        <BookListing key={book._id} book={book} />
+      ))}
     </div>
   );
 };
